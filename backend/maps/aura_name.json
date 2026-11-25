@@ -1,0 +1,23 @@
+{
+  "fluff": ["Blissful", "Sunshine-y", "Happy"],
+  "humor": ["Whimsical", "Joyful", "Spirited"],
+  "abo": ["Aromatic", "Fragrant", "Instinctual"],
+  "fantasy": ["Charmed", "Enchanted", "Jinxed"],
+  "angst": ["Malaise", "Melancholic", "Gloomy"],
+  "romance": ["Adoring", "Devoted", "Amorous"],
+  "mischief": ["Mischievous", "Spirited", "Lively"],
+  "slowburn": ["Lovesick", "Compelling", "Yearning"],
+  "smut": ["Ardent", "Fiery", "Passionate"],
+  "eerie": ["Eerie", "Daring", "Bold"],
+  "competition": ["Motivated", "Fierce", "Competitive"],
+  "creative": ["Creative", "Innovative", "Poetic"],
+  "crime": ["Vicious", "Menacing", "Threatening"],
+  "college": ["Nimble", "Quick-witted ", "Ingenious "],
+  "wild": ["Wild", "Savage", "Untamed"],
+  "hope": ["Hopeful", "Optimistic", "Bright"],
+  "royal": ["Imposing", "Opulent", "Lavish"],
+  "longing": ["Wistful", "Nostalgic", "Limerent"],
+  "hurt": ["Sorrowful ", "Forsaken", "Tortured"],
+  "foreplay": ["Indulgent", "Doting", "Attentive"],
+  "loving": ["Infatuated", "Bewitched", "Captivated"]
+}

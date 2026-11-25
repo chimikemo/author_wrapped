@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Please Wait</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.2em;
+        }
+        .position {
+            font-weight: bold;
+            color: #00ff99;
+        }
+    </style>
+    <!-- Refresh every 5 seconds -->
+    <meta http-equiv="refresh" content="5">
+</head>
+<body>
+    <div class="container">
+        <h1>hang in there!</h1>
+        <p>you are currently number <span class="position">{{ position }}</span> in the queue.</p>
+        <p>please wait. this page will refresh automatically.</p>
+        <p>don't open more tabs -- this will just make the site slower :(</p>
+    </div>
+</body>
+</html>

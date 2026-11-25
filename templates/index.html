@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ao3 author's wrapped</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <div class="main-site">
+
+        <h1>hi, stranger!</h1>
+        <p>welcome to the 2025 ao3 author's wrapped!</p>
+
+        <input type="text" id="usernameInput" placeholder="ao3 user or user/pseuds/pseud_you_use">
+        <button id="generateBtn">generate author's wrapped!</button>
+        <button class="info-btn" id="questionBtn">?</button>
+        <div class="info-box" id="infoBox">
+          <h4>i write under a pseud!</h4>
+            <p>type <i>your_username/pseuds/pseud_name</i> (e.g. <a href="https://archive.transformativeworks.org/users/mithruns/pseuds/catorus">mithruns/pseuds/catorus)</a></p>
+
+          <h4>it says i don't have works, but i do!</h4>
+            <p>this wrapped can only see public works, so your locked fics won't be considered :(</p>
+
+          <h4>my works are public and are not being seen</h4>
+            <p>only fics from 2025 are considered</p>
+
+          <h4>i didn't publish anything this year...</h4>
+            <p>in this case, all of your older works will be considered for the wrapped</p>
+
+          <h4>i'm getting some weird error</h4>
+            <p>drop @adoroestrelitas on twt a message</p>
+        </div>
+        <p id="result"></p>
+
+        <div id="statusBox" class="status-box"></div>
+    </div>
+    <div class="results">
+        <img id="wrappedImage" class="result-image hidden"><br />
+        <img id="collageImage" class="result-image hidden"><br />
+        <img id="auraImage" class="result-image hidden">
+    </div>
+
+</div>
+
+<script>
+      const button = document.getElementById('questionBtn');
+  const infoBox = document.getElementById('infoBox');
+
+  button.addEventListener('click', () => {
+    // Toggle visibility
+    if (infoBox.style.display === 'none' || infoBox.style.display === '') {
+      infoBox.style.display = 'block';
+    } else {
+      infoBox.style.display = 'none';
+    }
+  });
+
+
+    let statusInterval = null;
+    let sillyInterval = null;
+    let lastUpdateTime = Date.now();
+    let lastStatusIndex = 0;
+    let sillyQueue = [];
+
+    const SILLY_UPDATES = [
+        "feeding the hamsters in the wheel so the server will run faster",
+        "hoarding cute cat pictures",
+        "mlm, flip it around... wlw",
+        "trying to understand what blue lock even is about",
+        "nah i'd wrap",
+        "your fics' tag have taken me places i wouldn't go to with a gun",
+        "initiating potato farm... please stand by",
+        "have you drank enough water today?",
+        "calculating the vibes",
+        "locating hot dilfs / milfs in your area",
+        "noodle-fying your output",
+        "calculating all of the tags... there are, like, a LOT",
+        "loading silly updates so you know this is still working",
+        "un-retrograding mercury",
+        "calibrating the tags detector",
+        "waiting for the cabin episode of Heated Rivalry",
+        "finetuning the fluff-o-meter",
+        "un-dooming the yaoi / yuri",
+        "converting lemons into smut",
+        "identifying your top 6-7 ships",
+        "adding fluff to all angst fics",
+        "making labubu-shaped dubai chocolate",
+        "ao3 authors wrapped ahead? I sure hope it does",
+        "putting chimige to work",
+        "chimigo is taking a nap",
+        "watching joe jonas parallel park",
+        "making the angst 67% angstier",
+        "there was only ONE bed!!!"
+    ];
+
+    function refillSillyQueue() {
+    sillyQueue = [...SILLY_UPDATES]
+        .sort(() => Math.random() - 0.5);
+    }
+
+    function startStatusUpdates(author) {
+        const box = document.getElementById("statusBox");
+        box.innerHTML = "";
+        lastStatusIndex = 0;
+        lastUpdateTime = Date.now();
+        refillSillyQueue();
+
+        addUpdate("This usually takes a minute or two, hang on tight!", false);
+
+        addUpdate("It might take a while longer if you have several pages of works.", false);
+
+        sillyInterval = setInterval(maybeAddSillyUpdate, 1000);
+    }
+
+    function maybeAddSillyUpdate() {
+        if (Date.now() - lastUpdateTime <= 5000) return;
+
+        if (sillyQueue.length === 0) {
+            refillSillyQueue();
+        }
+
+        const msg = sillyQueue.shift();
+        addUpdate(msg, true);
+        lastUpdateTime = Date.now();
+    }
+
+
+    function addUpdate(text, isSilly = false) {
+        const box = document.getElementById("statusBox");
+
+        const p = document.createElement("p");
+        p.className = "update" + (isSilly ? " silly" : "");
+        p.innerText = `> ${text}`;
+
+        box.appendChild(p);
+        box.scrollTop = box.scrollHeight;
+
+        if (!isSilly) {
+            lastUpdateTime = Date.now();
+        }
+    }
+
+    function stopStatusUpdates() {
+        clearInterval(statusInterval);
+        clearInterval(sillyInterval);
+    }
+
+    document.getElementById("generateBtn").addEventListener("click", callTest);
+
+    function callTest() {
+        wrappedImage.classList.add("hidden");
+        collageImage.classList.add("hidden");
+        auraImage.classList.add("hidden");
+        const username = document.getElementById("usernameInput").value;
+        const result = document.getElementById("result");
+
+        if (username === "orphan_account") {
+            addUpdate("Ooops, can't run this for orphan_account!", false);
+            result.innerText = "error: can't run for orphan_account";
+            return; // Stop the function
+        }
+
+        addUpdate("starting generation…");
+        startStatusUpdates(username.split("/").pop());
+
+        fetch("/test", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "username=" + encodeURIComponent(username)
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.error) {
+                // Display backend error in statusBox
+                const p = document.createElement("p");
+                p.className = "update error";
+                p.innerText = data.error;
+                addUpdate(data.error, false);
+                result.innerText = "error :(";
+                return;
+            }
+            stopStatusUpdates();
+            addUpdate("done! scroll to see your results");
+
+            result.innerText = "scroll to see your full wrapped!";
+
+            if (data.wrapped) {
+                wrappedImage.src = data.wrapped;
+                wrappedImage.classList.remove("hidden");
+            }
+            if (data.collage) {
+                collageImage.src = data.collage;
+                collageImage.classList.remove("hidden");
+            }
+            if (data.aura) {
+                auraImage.src = data.aura;
+                auraImage.classList.remove("hidden");
+            }
+        })
+        .catch(err => {
+            stopStatusUpdates();
+            console.error(err);
+            addUpdate("oops! something went wrong :(", false);
+            addUpdate(err, false)
+            result.innerText = "error";
+        });
+    }
+</script>
+
+
+</body>
+</html>
