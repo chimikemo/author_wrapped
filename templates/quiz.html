@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ao3 author's wrapped</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='quiz.css') }}">
+
+</head>
+<body>
+
+<div class="container">
+
+        <h1 class="pixel-font">what type of fic writer are you?</h1>
+        <p>welcome to the 2025 ao3 author's wrapped!</p>
+        <div>
+            <form action="{{ url_for('submit_form') }}" method="POST">
+                <table>
+                    {% for row in questions %}
+                    <tr class="quiz-question">
+                        <td colspan="7">{{row.question}}</td>
+                    </tr>
+                    <tr class="quiz-answers">
+                        <td>Agree</td>
+
+                        <td><input type="radio" name="q{{row.id}}" class="q1" value="2" /> </td>
+                        <td><input type="radio" name="q{{row.id}}" class="q2" value="1" /> </td>
+                        <td><input type="radio" name="q{{row.id}}" class="q3" value="0" /> </td>
+                        <td><input type="radio" name="q{{row.id}}" class="q2" value="1" /> </td>
+                        <td><input type="radio" name="q{{row.id}}" class="q1" value="2" /> </td>
+                        <td>Disagree</td>
+                    </tr>
+
+                    {% endfor %}
+                </table>
+                <button type="submit">submit</button>
+            </form>
+
+        </div>
+
+        <p id="result"></p>
+
+
+</div>
+
+<script>
+</script>
+
+
+</body>
+</html>

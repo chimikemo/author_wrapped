@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css?family=Pixelify+Sans&display=swap');
+
+
+:root {
+    --background: #0F1F1E;
+    --light-green: #CAEA79;
+    --green: #9DEF54;
+    --olive: #93BC16;
+    --cyan: #18F9EA;
+    --turquoise: #34A48F;
+
+}
+
+
+body {
+    background: var(--background);
+}
+
+.pixel-font {
+    font-family: 'Pixelify Sans', sans-serif;
+    font-smooth: never;
+    -webkit-font-smoothing : none;
+
+}
+
+h1 {
+    color: var(--green);
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+tr.quiz-question td {
+    padding: 15px 0x 10px;
+}
+
+tr.quiz-answers td{
+    padding: 10px 0px 45px 0px;
+}
+
+input.q1{
+    height: 3em;
+    width: 3em;
+    color: aqua;
+}
+input.q2{
+    height: 2.1em;
+    width: 2.1em;
+}
+input.q3{
+    height: 1.5em;
+    width: 1.5em;
+}
+
+input[type='radio']:hover:before {
+  border-radius: 50%;
+  opacity: 1;
+  background: var(--turquoise);
+}
+
+input[type='radio']:before {
+  content: '';
+  display: block;
+  width: 60%;
+  height: 60%;
+  margin: 10%; /* Keeping margin only 10% */
+  padding: 10%; /* Increase the inner area for pushing the border out of the circle */
+  border-radius: 50%;
+    transition-duration: 0.2s;
+}
+
+input[type='radio']:checked {
+  background: var(--turquoise);
+}
+input[type='radio']:checked:before {
+  background: var(--turquoise);
+}

@@ -9,6 +9,7 @@ import random
 import json
 from collections import defaultdict, deque
 import time
+import csv
 
 updates = defaultdict(list)
 
@@ -50,6 +51,27 @@ def get_status(author):
 @app.route("/")
 def home():
     return render_template("index.html")
+
+
+@app.route("/quiz")
+def quiz():
+    with open ('backend/quiz/questions.csv', mode='r', encoding='utf-8') as file:
+        questions = csv.DictReader(file)
+        return render_template("quiz.html", questions=questions)
+
+@app.route("/quiz-result", methods=['POST'])
+def submit_form():
+    with open ('backend/quiz/questions.csv', mode='r', encoding='utf-8') as file_q:
+        with open ('backend/quiz/description.csv', mode='r', encoding='utf-8') as file_d:
+            questions = csv.DictReader(file_q)
+            descriptions = csv.DictReader(file_d)
+            user_answers = request.form.get('user_answers')
+            answers = request.form.to_dict()
+            answers = request.form.to_dict()
+            print(answers)
+            return render_template("quiz_results.html", descriptions=descriptions, user_answers=user_answers)
+
+
 
 @app.route("/backend/images/generated_images/<path:filename>")
 def serve_generated_image(filename):
